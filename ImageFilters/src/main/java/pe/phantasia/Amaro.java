@@ -19,13 +19,9 @@ import com.jabistudio.androidjhlabs.filter.util.AndroidUtils;
 /**
  * Created by mordonez on 1/14/14.
  */
-public class Amaro {
+public class Amaro extends Filter {
     private final String AMARO = "Amaro";
 
-    private int width;
-    private int height;
-    private int[] mColors;
-    private Bitmap levels;
 
     public Amaro() {
 
@@ -47,7 +43,7 @@ public class Amaro {
 
         Bitmap gradient = createRadialGradient();
 
-        return combineGrandientAndLevels(gradient, levels);
+        return combineGrandientAndImage(gradient, levels, PorterDuff.Mode.OVERLAY);
     }
 
     private CurvesFilter getLevelsFilter(){
@@ -93,35 +89,5 @@ public class Amaro {
         return curvesFilter;
     }
 
-    private Bitmap createRadialGradient() {
-        RadialGradient gradient = new RadialGradient(width/2, height/2, width/2, Color.GRAY,
-                0xFF000000, android.graphics.Shader.TileMode.CLAMP);
-        Paint paint = new Paint();
-        paint.setDither(true);
-        paint.setShader(gradient);
 
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        canvas.drawColor(0x000000FF);
-        canvas.drawRect(new Rect(0,0,width,height), paint);
-        //canvas.drawCircle(width/2, height/2, width/2, paint);
-
-        return bitmap;
-
-    }
-
-    private Bitmap combineGrandientAndLevels(Bitmap gradient, Bitmap levels) {
-        Bitmap result = levels.copy(Bitmap.Config.ARGB_8888, true);
-
-        Paint p = new Paint();
-        p.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.OVERLAY));
-        p.setShader(new BitmapShader(gradient, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
-
-        Canvas c = new Canvas();
-        c.setBitmap(result);
-        c.drawBitmap(levels, 0, 0, null);
-        c.drawRect(0, 0, levels.getWidth(), levels.getHeight(), p);
-
-        return result;
-    }
 }

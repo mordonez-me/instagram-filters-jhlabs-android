@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ImageFilters/ImageFilters.iml" filepath="$PROJECT_DIR$/ImageFilters/ImageFilters.iml" />
       <module fileurl="file://$PROJECT_DIR$/InstagramFilters.iml" filepath="$PROJECT_DIR$/InstagramFilters.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MyApplicationProject.iml" filepath="$PROJECT_DIR$/MyApplicationProject.iml" />
     </modules>
   </component>
 </project>

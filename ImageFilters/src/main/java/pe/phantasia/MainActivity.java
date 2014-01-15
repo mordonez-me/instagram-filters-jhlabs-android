@@ -47,29 +47,37 @@ public class MainActivity extends ActionBarActivity {
                     .commit();
         }
 
-        Button btnFilter = (Button) this.findViewById(R.id.btnFilter);
+        Button btnFilterAmaro = (Button) this.findViewById(R.id.btnFilterAmaro);
+
+        Button btnFilterEarlyBird = (Button) this.findViewById(R.id.btnFilterEarlyBird);
+
+        Button btnFilterLomoFi = (Button) this.findViewById(R.id.btnFilterLomoFi);
 
         final Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.image);
 
         final ImageView imageView = (ImageView) this.findViewById(R.id.imageView);
         imageView.setImageBitmap(image);
 
-        btnFilter.setOnClickListener(new View.OnClickListener() {
+        //final Amaro filter = new Amaro();
+        //final EarlyBird filter = new EarlyBird();
+        //final LomoFi filter = new LomoFi();
+
+        btnFilterAmaro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final Amaro filter = new Amaro();
+                imageView.setWillNotDraw(true);
 
                 Thread thread = new Thread(){
                     public void run() {
+
+                        final Bitmap newImage = filter.transform(image);
 
                         MainActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
 
-                                imageView.setWillNotDraw(true);
-
-                                //Amaro filter
-                                Amaro amaro = new Amaro();
-                                imageView.setImageBitmap(amaro.transform(image));
+                                imageView.setImageBitmap(newImage);
 
                                 imageView.setWillNotDraw(false);
                                 imageView.postInvalidate();
@@ -79,17 +87,62 @@ public class MainActivity extends ActionBarActivity {
                 };
                 thread.setDaemon(true);
                 thread.start();
+            }
+        });
 
-                /*try {
-                    image.compress(Bitmap.CompressFormat.PNG, 100, new FileOutputStream(new File("/mnt/sdcard/image2.png")));
-                } catch(FileNotFoundException e) {
-                    Log.e(LOGTAG, "No se pudo guardar la imagen");
-                }*/
+        btnFilterEarlyBird.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final EarlyBird filter = new EarlyBird();
+                imageView.setWillNotDraw(true);
 
+                Thread thread = new Thread(){
+                    public void run() {
 
-                //MediaStore.Images.Media.insertImage(getContentResolver(), dstBitmap, "test.png", "description");
+                        final Bitmap newImage = filter.transform(image, getResources());
 
+                        MainActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
 
+                                imageView.setImageBitmap(newImage);
+
+                                imageView.setWillNotDraw(false);
+                                imageView.postInvalidate();
+                            }
+                        });
+                    }
+                };
+                thread.setDaemon(true);
+                thread.start();
+            }
+        });
+
+        btnFilterLomoFi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final LomoFi filter = new LomoFi();
+                imageView.setWillNotDraw(true);
+
+                Thread thread = new Thread(){
+                    public void run() {
+
+                        final Bitmap newImage = filter.transform(image);
+
+                        MainActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                imageView.setImageBitmap(newImage);
+
+                                imageView.setWillNotDraw(false);
+                                imageView.postInvalidate();
+                            }
+                        });
+                    }
+                };
+                thread.setDaemon(true);
+                thread.start();
             }
         });
     }
