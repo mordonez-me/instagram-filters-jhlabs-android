@@ -1,40 +1,28 @@
 package pe.phantasia;
 
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
-import android.widget.Button;
 import android.widget.ImageView;
 
-import com.jabistudio.androidjhlabs.filter.ContrastFilter;
-import com.jabistudio.androidjhlabs.filter.Curve;
-import com.jabistudio.androidjhlabs.filter.CurvesFilter;
-import com.jabistudio.androidjhlabs.filter.GaussianFilter;
-import com.jabistudio.androidjhlabs.filter.util.AndroidUtils;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.util.logging.Logger;
-
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
     private static final String LOGTAG = "ImageFilterLog";
 
     private int[] mColors;
     protected Bitmap mFilterBitmap;
+    Bitmap image;
+    ImageView imageView;
+
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,106 +35,91 @@ public class MainActivity extends ActionBarActivity {
                     .commit();
         }
 
-        Button btnFilterAmaro = (Button) this.findViewById(R.id.btnFilterAmaro);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Processing...");
 
-        Button btnFilterEarlyBird = (Button) this.findViewById(R.id.btnFilterEarlyBird);
+        image = BitmapFactory.decodeResource(getResources(), R.drawable.image);
 
-        Button btnFilterLomoFi = (Button) this.findViewById(R.id.btnFilterLomoFi);
-
-        final Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.image);
-
-        final ImageView imageView = (ImageView) this.findViewById(R.id.imageView);
+        imageView = (ImageView) this.findViewById(R.id.imageView);
         imageView.setImageBitmap(image);
 
-        //final Amaro filter = new Amaro();
-        //final EarlyBird filter = new EarlyBird();
-        //final LomoFi filter = new LomoFi();
-
-        btnFilterAmaro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Amaro filter = new Amaro();
-                imageView.setWillNotDraw(true);
-
-                Thread thread = new Thread(){
-                    public void run() {
-
-                        final Bitmap newImage = filter.transform(image);
-
-                        MainActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                imageView.setImageBitmap(newImage);
-
-                                imageView.setWillNotDraw(false);
-                                imageView.postInvalidate();
-                            }
-                        });
-                    }
-                };
-                thread.setDaemon(true);
-                thread.start();
-            }
-        });
-
-        btnFilterEarlyBird.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final EarlyBird filter = new EarlyBird();
-                imageView.setWillNotDraw(true);
-
-                Thread thread = new Thread(){
-                    public void run() {
-
-                        final Bitmap newImage = filter.transform(image, getResources());
-
-                        MainActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                imageView.setImageBitmap(newImage);
-
-                                imageView.setWillNotDraw(false);
-                                imageView.postInvalidate();
-                            }
-                        });
-                    }
-                };
-                thread.setDaemon(true);
-                thread.start();
-            }
-        });
-
-        btnFilterLomoFi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final LomoFi filter = new LomoFi();
-                imageView.setWillNotDraw(true);
-
-                Thread thread = new Thread(){
-                    public void run() {
-
-                        final Bitmap newImage = filter.transform(image);
-
-                        MainActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                imageView.setImageBitmap(newImage);
-
-                                imageView.setWillNotDraw(false);
-                                imageView.postInvalidate();
-                            }
-                        });
-                    }
-                };
-                thread.setDaemon(true);
-                thread.start();
-            }
-        });
     }
 
+
+    void applyAmaro() {
+        final Amaro filter = new Amaro();
+        // show a progress dialogue while processing
+        progressDialog.show();
+
+        Thread thread = new Thread() {
+            public void run() {
+
+                final Bitmap newImage = filter.transform(image);
+
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        imageView.setImageBitmap(newImage);
+                        // hide a progress dialogue when done processing
+                        progressDialog.hide();
+                    }
+                });
+            }
+        };
+        thread.setDaemon(true);
+        thread.start();
+    }
+
+    void applyEarlyBird() {
+        final EarlyBird filter = new EarlyBird();
+        // show a progress dialogue while processing
+        progressDialog.show();
+
+        Thread thread = new Thread() {
+            public void run() {
+
+                final Bitmap newImage = filter.transform(image, getResources());
+
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        imageView.setImageBitmap(newImage);
+                        // hide a progress dialogue when done processing
+                        progressDialog.hide();
+                    }
+                });
+            }
+        };
+        thread.setDaemon(true);
+        thread.start();
+    }
+
+    void applyLomoFi() {
+        final LomoFi filter = new LomoFi();
+        // show a progress dialogue while processing
+        progressDialog.show();
+
+        Thread thread = new Thread() {
+            public void run() {
+
+                final Bitmap newImage = filter.transform(image);
+
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        imageView.setImageBitmap(newImage);
+                        // hide a progress dialogue when done processing
+                        progressDialog.hide();
+                    }
+                });
+            }
+        };
+        thread.setDaemon(true);
+        thread.start();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -162,7 +135,14 @@ public class MainActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
-            case R.id.action_settings:
+            case R.id.action_amaro:
+                applyAmaro();
+                return true;
+            case R.id.action_earlybird:
+                applyEarlyBird();
+                return true;
+            case R.id.action_lomofi:
+                applyLomoFi();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -178,7 +158,7 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             return rootView;
         }

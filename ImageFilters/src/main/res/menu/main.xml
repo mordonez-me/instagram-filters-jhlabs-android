@@ -3,8 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity" >
     
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+    <item android:id="@+id/action_amaro"
+        android:title="@string/action_amaro"
         android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_earlybird"
+        android:title="@string/action_earlybird"
+        android:orderInCategory="101"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_lomofi"
+        android:title="@string/action_lomofi"
+        android:orderInCategory="102"
         app:showAsAction="never" />
 </menu>
