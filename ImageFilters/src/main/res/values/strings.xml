@@ -2,7 +2,8 @@
 <resources>
 
     <string name="app_name">ImageFilters</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_amaro">Amaro</string>
+    <string name="action_earlybird">EarlyBird</string>
+    <string name="action_lomofi">LomoFi</string>
 
 </resources>

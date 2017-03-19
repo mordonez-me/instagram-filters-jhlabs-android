@@ -29,3 +29,8 @@ proguard/
 *.ipr
 *.iws
 .idea/
+build/android-profile/profile-2017-03-12-20-33-55-267.rawproto
+build/android-profile/profile-2017-03-12-20-34-47-852.rawproto
+build/android-profile/profile-2017-03-12-20-35-05-103.rawproto
+build/android-profile/profile-2017-03-12-20-35-25-267.rawproto
+build/generated/mockable-android-25.jar

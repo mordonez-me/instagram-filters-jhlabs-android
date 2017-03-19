@@ -6,37 +6,10 @@
     tools:context=".MainActivity"
     tools:ignore="MergeRootFrame" >
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Amaro"
-        android:id="@+id/btnFilterAmaro"
-        android:layout_gravity="left|top" />
-
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/imageView"
         android:layout_gravity="center" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageViewDst"
-        android:layout_gravity="center_horizontal|bottom" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="EarlyBird"
-        android:id="@+id/btnFilterEarlyBird"
-        android:layout_gravity="center_horizontal|top" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LomoFi"
-        android:id="@+id/btnFilterLomoFi"
-        android:layout_gravity="right|top" />
 
 </FrameLayout>

@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ImageFilters/ImageFilters.iml" filepath="$PROJECT_DIR$/ImageFilters/ImageFilters.iml" />
-      <module fileurl="file://$PROJECT_DIR$/InstagramFilters.iml" filepath="$PROJECT_DIR$/InstagramFilters.iml" />
-      <module fileurl="file://$PROJECT_DIR$/MyApplicationProject.iml" filepath="$PROJECT_DIR$/MyApplicationProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/instagram-filters-jhlabs-android.iml" filepath="$PROJECT_DIR$/instagram-filters-jhlabs-android.iml" />
     </modules>
   </component>
 </project>
-
